@@ -7,8 +7,8 @@ if(Meteor.isClient){
 		'player': function(){
 			return PlayersList.find()
 		},
-		'otherHelper': function(){
-			return 'text from otherHelper'
+		'playerCount': function(){
+			return PlayersList.find().count()
 		}
 	});
 }
