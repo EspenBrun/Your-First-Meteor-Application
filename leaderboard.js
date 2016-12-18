@@ -9,12 +9,17 @@ if(Meteor.isClient){
 		},
 		'playerCount': function(){
 			return PlayersList.find().count()
+		},
+		'selectedClass': function(){
+			return "selected"
 		}
 	});
 
 	Template.leaderboard.events({
 		'click .player': function(){
-			return console.log("you clicked a .player yo")
+			var playerId = this._id;
+			Session.set('selectedPlayer', playerId);
+			
 		},
 		'dblclick .player': function(){
 			return console.log(".player dblclicked")
