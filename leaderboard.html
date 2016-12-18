@@ -3,14 +3,14 @@
 </head>
 
 <body>
-	<h1>Leaderboard</h1>
+	<h1 class="h1">Leaderboard</h1>
 	{{> leaderboard}}
 </body>
 
 <template name="leaderboard">
 	<ul>
 		{{#each player}} 
-			<li>{{name}}: {{score}}</li>
+			<li class="player">{{name}}: {{score}}</li>
 		{{/each}}
 	</ul>
 	<p>Number of players: {{playerCount}}</p>
