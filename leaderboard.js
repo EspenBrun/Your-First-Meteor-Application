@@ -11,7 +11,11 @@ if(Meteor.isClient){
 			return PlayersList.find().count()
 		},
 		'selectedClass': function(){
-			return "selected"
+			var playerId = this._id;
+			var selectedPlayer = Session.get('selectedPlayer');
+			if(playerId == selectedPlayer){
+				return "selected"
+			}
 		}
 	});
 
