@@ -36,6 +36,10 @@ if(Meteor.isClient){
 			var playerScore = PlayersList.update(selectedPlayer, {$inc: {score: 5}});
 
 			return console.log(playerScore)
+		},
+		'click .decrement': function(){
+			var selectedPlayer = Session.get('selectedPlayer');
+			var playerScore = PlayersList.update(selectedPlayer, {$inc: {score: -5}});
 		}
 	});
 }
