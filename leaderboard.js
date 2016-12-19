@@ -44,6 +44,10 @@ if(Meteor.isClient){
 		'click .decrement': function(){
 			var selectedPlayer = Session.get('selectedPlayer');
 			var playerScore = PlayersList.update(selectedPlayer, {$inc: {score: -5}});
+		},
+		'click .remove': function(){
+			var selectedPlayer = Session.get('selectedPlayer');
+			PlayersList.remove(selectedPlayer);
 		}
 	});
 
@@ -52,6 +56,7 @@ if(Meteor.isClient){
 			e.preventDefault();
 			var playerNameVar = e.target.playerName.value;
 			PlayersList.insert({name: playerNameVar, score: 0});
+			e.target.playerName.value = '';
 		}
 	})
 }
