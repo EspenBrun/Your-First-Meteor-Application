@@ -5,17 +5,27 @@ if(Meteor.isClient){
 
 	Template.leaderboard.helpers({
 		'player': function(){
+			
 			return PlayersList.find({}, {sort: {score: -1, name: 1}}) //PlayersList.find()===return PlayersList.find({})
 		},
 		'playerCount': function(){
+			
 			return PlayersList.find().count()
 		},
 		'selectedClass': function(){
 			var playerId = this._id;
 			var selectedPlayer = Session.get('selectedPlayer');
 			if(playerId == selectedPlayer){
+				
 				return "selected"
 			}
+		},
+		'showSelectedPlayer': function(){
+			var selectedPlayer = Session.get('selectedPlayer');
+			
+			return PlayersList.findOne(selectedPlayer)
+			// Gives wierd warning
+			// return PlayersList.findOne(selectedPlayer).name
 		}
 	});
 
@@ -26,9 +36,11 @@ if(Meteor.isClient){
 			
 		},
 		'dblclick .player': function(){
+			
 			return console.log(".player dblclicked")
 		},
 		'mouseover .player': function(){
+			
 			return console.log("just mousing over")
 		},
 		'click .increment': function(){
