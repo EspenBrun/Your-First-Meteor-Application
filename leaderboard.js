@@ -35,14 +35,6 @@ if(Meteor.isClient){
 			Session.set('selectedPlayer', playerId);
 			
 		},
-		'dblclick .player': function(){
-			
-			return console.log(".player dblclicked")
-		},
-		'mouseover .player': function(){
-			
-			return console.log("just mousing over")
-		},
 		'click .increment': function(){
 			var selectedPlayer = Session.get('selectedPlayer');
 			var playerScore = PlayersList.update(selectedPlayer, {$inc: {score: 5}});
@@ -54,6 +46,14 @@ if(Meteor.isClient){
 			var playerScore = PlayersList.update(selectedPlayer, {$inc: {score: -5}});
 		}
 	});
+
+	Template.addPlayerForm.events({
+		'submit form': function(e){
+			e.preventDefault();
+			var playerNameVar = e.target.playerName.value;
+			PlayersList.insert({name: playerNameVar, score: 0});
+		}
+	})
 }
 else if(Meteor.isServer){
 	console.log("Hello from js file to server");

@@ -8,6 +8,7 @@
 </body>
 
 <template name="leaderboard">
+	{{> addPlayerForm}}
 	{{#if showSelectedPlayer}}
 		<input type="button" class="increment" value="Give 5 points">
 		<input type="button" class="decrement" value="Take 5 points">
@@ -22,3 +23,10 @@
 	{{/if}}
 	<p>Number of players: {{playerCount}}</p>
 </template>		
+
+<template name="addPlayerForm">
+	<form>
+		<input type="text" name="playerName">
+		<input type="submit" value="Add Player">
+	</form>
+</template>
