@@ -47,7 +47,10 @@ if(Meteor.isClient){
 		},
 		'click .remove': function(){
 			var selectedPlayer = Session.get('selectedPlayer');
-			PlayersList.remove(selectedPlayer);
+			var confirm = window.confirm("Are you sure you want to delete this player?");
+			if(confirm){
+				PlayersList.remove(selectedPlayer);
+			}
 		}
 	});
 
