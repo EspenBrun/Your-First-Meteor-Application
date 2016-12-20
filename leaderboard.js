@@ -5,8 +5,12 @@ if(Meteor.isClient){
 
 	Template.leaderboard.helpers({
 		'player': function(){
-			
-			return PlayersList.find({}, {sort: {score: -1, name: 1}}) //PlayersList.find()===return PlayersList.find({})
+			var currentUserId = Meteor.userId();
+
+			return PlayersList.find(
+				{createdBy: currentUserId}, 
+				{sort: {score: -1, name: 1}}
+			) //PlayersList.find()===return PlayersList.find({})
 		},
 		'playerCount': function(){
 			
@@ -55,9 +59,13 @@ if(Meteor.isClient){
 	Template.addPlayerForm.events({
 		'submit form': function(e){
 			e.preventDefault();
+			var currentUserId = Meteor.userId();
 			var playerNameVar = e.target.playerName.value;
 			var playerScoreVar = e.target.playerScore.value;
-			PlayersList.insert({name: playerNameVar, score: playerScoreVar});
+			PlayersList.insert({
+				name: playerNameVar,
+				score: playerScoreVar,
+				createdBy: currentUserId});
 			e.target.playerName.value = '';
 			e.target.playerScore.value = 0;
 		}
