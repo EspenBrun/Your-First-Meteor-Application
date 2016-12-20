@@ -15,7 +15,12 @@
 	{{/if}}
 	<ul>
 		{{#each player}} 
-			<li class="player {{selectedClass}}">{{name}}: {{score}} <input type="button" class="remove" value="&times;"></li>
+			<li class="player {{selectedClass}}">
+				{{name}}: {{score}}
+				{{#if showSelectedPlayer}}
+					<input type="button" class="remove" value="&times;">
+				{{/if}}
+			</li>
 		{{/each}}
 	</ul>
 	{{#if showSelectedPlayer}}
