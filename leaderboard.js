@@ -2,20 +2,18 @@ PlayersList = new Mongo.Collection('players');
 
 if(Meteor.isClient){
 	console.log("Hello from js file to client");
-	var thePlayers = Meteor.subscribe('thePlayers');
+	Meteor.subscribe('thePlayers');
 
 	Template.leaderboard.helpers({
 		'player': function(){
 			var currentUserId = Meteor.userId();
 
-			return thePlayers.find(
-				{createdBy: currentUserId}, 
-				{sort: {score: -1, name: 1}}
+			return PlayersList.find({}, {sort: {score: -1, name: 1}}
 			) //PlayersList.find()===return PlayersList.find({})
 		},
 		'playerCount': function(){
 			
-			return thePlayers.find().count()
+			return PlayersList.find().count()
 		},
 		'selectedClass': function(){
 			var playerId = this._id;
@@ -28,7 +26,7 @@ if(Meteor.isClient){
 		'showSelectedPlayer': function(){
 			var selectedPlayer = Session.get('selectedPlayer');
 			
-			return thePlayers.findOne(selectedPlayer)
+			return PlayersList.findOne(selectedPlayer)
 			// Gives wierd warning
 			// return PlayersList.findOne(selectedPlayer).name
 		}
@@ -42,17 +40,17 @@ if(Meteor.isClient){
 		},
 		'click .increment': function(){
 			var selectedPlayer = Session.get('selectedPlayer');
-			var playerScore = thePlayers.update(selectedPlayer, {$inc: {score: 5}});
+			var playerScore = PlayersList.update(selectedPlayer, {$inc: {score: 5}});
 		},
 		'click .decrement': function(){
 			var selectedPlayer = Session.get('selectedPlayer');
-			var playerScore = thePlayers.update(selectedPlayer, {$inc: {score: -5}});
+			var playerScore = PlayersList.update(selectedPlayer, {$inc: {score: -5}});
 		},
 		'click .remove': function(){
 			var selectedPlayer = Session.get('selectedPlayer');
 			var confirm = window.confirm("Are you sure you want to delete this player?");
 			if(confirm){
-				thePlayers.remove(selectedPlayer);
+				PlayersList.remove(selectedPlayer);
 			}
 		}
 	});
@@ -63,7 +61,7 @@ if(Meteor.isClient){
 			var currentUserId = Meteor.userId();
 			var playerNameVar = e.target.playerName.value;
 			var playerScoreVar = e.target.playerScore.value;
-			thePlayers.insert({
+			PlayersList.insert({
 				name: playerNameVar,
 				score: playerScoreVar,
 				createdBy: currentUserId});
@@ -73,10 +71,10 @@ if(Meteor.isClient){
 	})
 }
 else if(Meteor.isServer){
-	console.log("Hello from js file to server");
-
+	console.log("Hello from js to server");
 	Meteor.publish('thePlayers', function(){
-		return thePlayers.find()
+		var currentUserId = this.userId;
+		return PlayersList.find({createdBy: currentUserId})
 	});
 }
 
