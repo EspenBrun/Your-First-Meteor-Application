@@ -63,18 +63,26 @@ if(Meteor.isClient){
 			var playerScoreVar = e.target.playerScore.value;
 			PlayersList.insert({
 				name: playerNameVar,
-				score: playerScoreVar,
+				score: parseInt(playerScoreVar),
 				createdBy: currentUserId});
 			e.target.playerName.value = '';
 			e.target.playerScore.value = 0;
+			Meteor.call('sendLogMessage');
 		}
 	})
 }
 else if(Meteor.isServer){
 	console.log("Hello from js to server");
+	
 	Meteor.publish('thePlayers', function(){
 		var currentUserId = this.userId;
 		return PlayersList.find({createdBy: currentUserId})
 	});
+
+	Meteor.methods({
+		'sendLogMessage': function(){
+			console.log("Hello from methods");
+		}
+	});	
 }
 
