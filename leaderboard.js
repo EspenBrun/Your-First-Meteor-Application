@@ -50,7 +50,7 @@ if(Meteor.isClient){
 			var selectedPlayer = Session.get('selectedPlayer');
 			var confirm = window.confirm("Are you sure you want to delete this player?");
 			if(confirm){
-				PlayersList.remove(selectedPlayer);
+				Meteor.call('removePlayer', selectedPlayer);
 			}
 		}
 	});
@@ -82,6 +82,9 @@ else if(Meteor.isServer){
 				score: parseInt(score),
 				createdBy: currentUserId
 			});
+		},
+		'removePlayer': function(selectedPlayer){
+			PlayersList.remove(selectedPlayer);
 		}
 	});
 }
